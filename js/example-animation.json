@@ -1,0 +1,36 @@
+window.exampleAnimation = {
+	"properties": {
+		"width": 50,
+		"height": 50,
+		"depth": 50,
+		"types": {
+			"protein": {
+				"color": "#800000",
+				"size": 5
+			},
+			"lipids": {
+				"color": "#FFA500",
+				"size": 5
+			}
+		}
+	},
+	"particles": [
+		{ "type": "protein" },
+		{ "type": "protein" }
+	],
+	"animation": [
+		[
+			[10, 20, 10],
+			[20, 15, 20]
+		],
+		[
+			[11, 19, 10],
+			[20, 14, 20]
+		]
+	],
+	"collisions": [
+		[],
+		[],
+		[]
+	]
+};
