@@ -4,9 +4,24 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title></title>
+		<style>
+			#container {
+				background: #000;
+				width: 400px;
+				height: 300px;
+			}
+		</style>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
+        <script src="js/three.min.js"></script>
+        <script src="js/particle-viewer.core.js"></script>
+        <script src="js/particle-viewer.settings.js"></script>
+        <script src="js/example-animation.json"></script>
     </head>
     <body>
+    	<div id="container"></div>
     </body>
+    <script>
+    	PV.load(exampleAnimation).init("container");
+    </script>
 </html>
