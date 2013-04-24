@@ -5,23 +5,30 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title></title>
 		<style>
+			html, body {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+			}
 			#container {
-				background: #000;
-				width: 400px;
-				height: 300px;
+				background: #999;
+				width: 100%;
+				height: 100%;
 			}
 		</style>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <script src="js/three.min.js"></script>
+        <script src="js/stats.min.js"></script>
         <script src="js/particle-viewer.core.js"></script>
         <script src="js/particle-viewer.settings.js"></script>
+        <script src="js/particle-viewer.renderer.js"></script>
         <script src="js/example-animation.json"></script>
     </head>
     <body>
     	<div id="container"></div>
     </body>
     <script>
-    	PV.load(exampleAnimation).init("container");
+    	PV.load( exampleAnimation ).init( "#container" ).start();
     </script>
 </html>
