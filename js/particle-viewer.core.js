@@ -67,7 +67,7 @@
 				PV.animation.particles[i].molecule = PV.createMolecule( PV.animation.animation[0][i] );
 				PV.THREE.scene.add( PV.animation.particles[i].molecule );
 			}
-			
+	
 			PV.addCamera()
 				.addLights()
 				.drawContainerbox()
@@ -103,6 +103,7 @@
 			PV.animation.particles[i].molecule.position.z = pos[2];
 		}
 		
+		PV.THREE.controls.update();
 		PV.draw();
 		stats.update();
 		

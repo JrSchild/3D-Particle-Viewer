@@ -21,6 +21,20 @@
 		PV.THREE.camera.position.z = 250;
 		PV.THREE.camera.position.y = -400;
 		PV.THREE.camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
+
+		PV.THREE.controls =  new TrackballControls( PV.THREE.camera );
+
+		PV.THREE.controls.rotateSpeed = 1.0;
+		PV.THREE.controls.zoomSpeed = 1.2;
+		PV.THREE.controls.panSpeed = 0.8;
+
+		PV.THREE.controls.noZoom = false;
+		PV.THREE.controls.noPan = false;
+
+		PV.THREE.controls.staticMoving = true;
+		PV.THREE.controls.dynamicDampingFactor = 0.3;
+
+		PV.THREE.controls.keys = [ 65, 83, 68 ];
 		return PV;
 	};
 	
