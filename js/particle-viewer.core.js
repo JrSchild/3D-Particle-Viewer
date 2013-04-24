@@ -23,6 +23,16 @@
 	// The container to append the canvas element to
 	PV.container = undefined;
 	
+	// The start time of the animation and the current frame.
+	PV.time = undefined;
+	PV.frame = 0;
+	
+	// Amount miliseconds for each frame
+	PV.spf = 500;
+	
+	// distance between coordinates
+	PV.coordDist = 25;
+	
 	/**
 	 * Load a predefined JSON-animation into the Particle Viewer
 	 * For now we'll just assume that the data coming in is completely valid and stable conform guidelines
@@ -58,8 +68,6 @@
 				PV.THREE.scene.add( PV.animation.particles[i].molecule );
 			}
 			
-			
-			
 			PV.addCamera()
 				.addLights()
 				.drawContainerbox()
@@ -78,6 +86,23 @@
 	};
 	
 	PV.animate = function() {
+		var time = new Date().getTime() - PV.time;
+		var frame = Math.floor( time / PV.spf );
+		var timeInFrame = time - (frame * PV.spf);
+		var progressInFrame = timeInFrame / PV.spf;
+		
+		var i = 0;
+		
+		// calculate new position for each molecule and replace it.
+		if( PV.animation.animation[frame] ) {
+			var a = PV.animation.animation;
+			var pos = PV.calcPos( a[frame][i], a[frame + 1][i], progressInFrame );
+			
+			PV.animation.particles[i].molecule.position.x = pos[0];
+			PV.animation.particles[i].molecule.position.y = pos[1];
+			PV.animation.particles[i].molecule.position.z = pos[2];
+		}
+		
 		PV.draw();
 		stats.update();
 		
@@ -85,6 +110,7 @@
 	};
 	
 	PV.start = function() {
+		PV.time = (new Date()).getTime();
 		PV.animate();
 		return PV;
 	};
@@ -95,6 +121,14 @@
 	
 	PV.restart = function() {
 		return PV;
+	};
+	
+	PV.calcPos = function( pos1, pos2, progress ) {
+		var posX = ( pos1[0] + progress * ( pos2[0] - pos1[0] ) ) * PV.coordDist;
+		var posY = ( pos1[1] + progress * ( pos2[1] - pos1[1] ) ) * PV.coordDist;
+		var posZ = ( pos1[2] + progress * ( pos2[2] - pos1[2] ) ) * PV.coordDist;
+				
+		return [posX, posY, posZ];
 	};
 	
 })();

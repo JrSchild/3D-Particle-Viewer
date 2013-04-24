@@ -49,7 +49,8 @@
 	};
 	
 	PV.createMolecule = function( pos ) {
-		var x = pos[0] * 10 || 0,
+		var pos = pos || [],
+			x = pos[0] * 10 || 0,
 			y = pos[1] * 10 || 0,
 			z = pos[2] * 10 || 0;
 		
@@ -73,10 +74,10 @@
 	PV.drawContainerbox = function() {
 		var plane = new THREE.Mesh(
 			new THREE.PlaneGeometry(
-				500,
-				500,
-				20,
-				20
+				PV.animation.properties.width * PV.coordDist,
+				PV.animation.properties.depth * PV.coordDist,
+				PV.animation.properties.width,
+				PV.animation.properties.depth
 			), new THREE.MeshBasicMaterial({
 				color: 0x555555,
 				wireframe: true
