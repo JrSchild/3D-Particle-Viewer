@@ -22,7 +22,7 @@
 		PV.THREE.camera.position.y = -400;
 		PV.THREE.camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
 
-		PV.THREE.controls =  new TrackballControls( PV.THREE.camera );
+		PV.THREE.controls =  new THREE.TrackballControls( PV.THREE.camera );
 
 		PV.THREE.controls.rotateSpeed = 1.0;
 		PV.THREE.controls.zoomSpeed = 1.2;
