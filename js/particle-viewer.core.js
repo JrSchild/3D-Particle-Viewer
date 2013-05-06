@@ -86,11 +86,10 @@
 	
 	PV.animate = function() {
 		var animation       = PV.animation.animation,
-			time            = ( new Date() ).getTime() - PV.time,
+			time            = new Date().getTime() - PV.time,
 			frame           = Math.floor( time / PV.spf ),
 			progressInFrame = ( time - ( frame * PV.spf ) ) / PV.spf;
 		
-		var i = 0;
 		// calculate new position for each molecule and replace it.
 		if( animation[frame+1] ) {
 			for ( var i in PV.animation.particles ) {
@@ -101,8 +100,9 @@
 				mol.y = pos[1];
 				mol.z = pos[2];
 			}
-			
-			
+		} else {
+			// restart the animation
+			PV.time = (new Date()).getTime();
 		}
 		
 		PV.THREE.controls.update();
@@ -126,13 +126,20 @@
 		return PV;
 	};
 	
+	/**
+	 * Calculates the new position based on the progress between position 1 and 2.
+	 */
 	PV.calcPos = function( pos1, pos2, progress ) {
 		var div = PV.animation.properties.width / 2;
-		var posX = ( ( pos1[0] + progress * ( pos2[0] - pos1[0] ) ) - div ) * PV.coordDist;
-		var posY = ( ( pos1[1] + progress * ( pos2[1] - pos1[1] ) ) - div ) * PV.coordDist;
-		var posZ = ( ( pos1[2] + progress * ( pos2[2] - pos1[2] ) ) - div ) * PV.coordDist;
+		function f( p1, p2 ) {
+			return ( ( p1 + progress * ( p2 - p1 ) ) - div ) * PV.coordDist;
+		}
 				
-		return [posX, posY, posZ];
+		return [
+			f(pos1[0], pos2[0]),
+			f(pos1[1], pos2[1]),
+			f(pos1[2], pos2[2])
+		];
 	};
 	
 })();
