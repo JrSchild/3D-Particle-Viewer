@@ -54,15 +54,20 @@
 			    	
 			    	if( i == 0 ) {
 				    	// set start coords
-				    	a[i][x] = [r(0, p.width), r(0, p.height), r(0, p.height)];
+				    	a[i][x] = [r(0, p.width), r(0, p.height), r(0, p.depth)];
 			    	} else {
 			    		// use previous frame and add either -1, 0 or 1 to each coord.
 				    	var prev = a[i-1][x];
-				    	a[i][x] = [prev[0]+r(-1, 1), prev[1]+r(-1, 1), prev[2]+r(-1, 1)];
+				    	
+				    	a[i][x] = [
+				    		prev[0]+r(prev[0] <= 0 ? 0 : -1, prev[0] >= p.width ? 0 : 1),
+				    		prev[1]+r(prev[1] <= 0 ? 0 : -1, prev[1] >= p.height ? 0 : 1),
+				    		prev[2]+r(prev[2] <= 0 ? 0 : -1, prev[2] >= p.depth ? 0 : 1)
+				    	];
 			    	}
 		    	}
 	    	}
-	    	console.log(window.exampleAnimation);
+	    	console.log(JSON.stringify(window.exampleAnimation));
     	}
     	randomMolecules(500, 20);
     
