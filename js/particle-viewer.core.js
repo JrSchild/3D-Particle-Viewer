@@ -32,11 +32,15 @@
 	// distance between coordinates
 	PV.coordDist = 25;
 	
+	// Current frame, to check if a new frame is entered
+	PV.currentFrame = 0;
+	
 	/**
 	 * Load a predefined JSON-animation into the Particle Viewer
 	 * For now we'll just assume that the data coming in is completely valid and stable conform guidelines
 	 */
 	PV.load = function( animation ) {
+		PV.fillEmptyMolecules( animation );
 		PV.animation = animation;
 		return PV;
 	};
@@ -63,7 +67,7 @@
 			// run through all molecules in the settings and create objects for them.
 			// Place them on the startplace.
 			for ( var i in PV.animation.particles ) {
-				PV.animation.particles[i].molecule = PV.createMolecule( PV.animation.animation[0][i] );
+				PV.animation.particles[i].molecule = PV.Molecules[PV.animation.particles[i].type]();
 				PV.THREE.scene.add( PV.animation.particles[i].molecule );
 			}
 	
@@ -88,14 +92,27 @@
 		var animation       = PV.animation.animation,
 			time            = new Date().getTime() - PV.time,
 			frame           = Math.floor( time / PV.spf ),
-			progressInFrame = ( time - ( frame * PV.spf ) ) / PV.spf;
+			progressInFrame = ( time - ( frame * PV.spf ) ) / PV.spf,
+			isNewFrame		= false;
+		
+		if( frame > PV.currentFrame ) {
+			//console.log("new frame: " + frame);
+			PV.currentFrame = frame;
+			isNewFrame = true;
+		}
+				
+		// remove molecules that are no longer in the animation
+		if( isNewFrame && animation[frame-1] ) {
+			//for( var )
+		}
 		
 		// calculate new position for each molecule and replace it.
 		if( animation[frame+1] ) {
-			for ( var i in PV.animation.particles ) {
+			for( var i in animation[frame] ) {
+				
 				var mol = PV.animation.particles[i].molecule.position,
 					pos = PV.calcPos( animation[frame][i], animation[frame + 1][i], progressInFrame );
-			
+				
 				mol.x = pos[0];
 				mol.y = pos[1];
 				mol.z = pos[2];
@@ -103,6 +120,7 @@
 		} else {
 			// restart the animation
 			PV.time = (new Date()).getTime();
+			PV.currentFrame = 0;
 		}
 		
 		PV.THREE.controls.update();
@@ -141,5 +159,26 @@
 			f(pos1[2], pos2[2])
 		];
 	};
+	
+	/**
+	 * Fill the frames in the animation with empty arrays if the molecule is not there.
+	 * this will remove it from the screen.
+	 */
+	PV.fillEmptyMolecules = function( data ) {
+    	var indexes = {};
+    	// fill the list of indexes
+    	for( var i in data.particles ) {
+        	indexes[i] = "";
+    	}
+    	
+		for( var i in data.animation ) {
+			var _this = data.animation[i];
+			for( var x in indexes ) {
+				if( _this[x] === undefined )
+					_this[x] = [];
+			}
+		}
+		return data;
+    };
 	
 })();
