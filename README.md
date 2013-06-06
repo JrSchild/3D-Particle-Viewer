@@ -7,3 +7,8 @@ In the current example the animation is overwritten by generating an x amount of
 
 For a screencast see:
 http://www.youtube.com/watch?v=knlt5fazfSU
+
+Support
+-------
+
+Currently only Google Chrome (latest) is supported
