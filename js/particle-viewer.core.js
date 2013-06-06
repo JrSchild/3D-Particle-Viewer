@@ -92,19 +92,8 @@
 		var animation       = PV.animation.animation,
 			time            = new Date().getTime() - PV.time,
 			frame           = Math.floor( time / PV.spf ),
-			progressInFrame = ( time - ( frame * PV.spf ) ) / PV.spf,
-			isNewFrame		= false;
+			progressInFrame = ( time - ( frame * PV.spf ) ) / PV.spf;
 		
-		if( frame > PV.currentFrame ) {
-			//console.log("new frame: " + frame);
-			PV.currentFrame = frame;
-			isNewFrame = true;
-		}
-				
-		// remove molecules that are no longer in the animation
-		if( isNewFrame && animation[frame-1] ) {
-			//for( var )
-		}
 		
 		// calculate new position for each molecule and replace it.
 		if( animation[frame+1] ) {
@@ -120,7 +109,6 @@
 		} else {
 			// restart the animation
 			PV.time = (new Date()).getTime();
-			PV.currentFrame = 0;
 		}
 		
 		PV.THREE.controls.update();
