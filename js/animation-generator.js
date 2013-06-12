@@ -1,8 +1,9 @@
 (function() {
-	var data;
+	var data, props;
 
 	var Generator = window.Generator = function( animation ) {
 		data	= animation;
+		props	= data.properties;
 		return Generator;
 	};
 
@@ -21,12 +22,10 @@
 	 * @param prev: the previous frame to add movement to.
 	 */
 	function randomPos( prev ) {
-		var p = data.properties;
-		
 		return [
-			prev[0]+r( prev[0] <= 0 ? 0 : -1, prev[0] >= p.width ? 0 : 1 ),
-			prev[1]+r( prev[1] <= 0 ? 0 : -1, prev[1] >= p.height ? 0 : 1 ),
-			prev[2]+r( prev[2] <= 0 ? 0 : -1, prev[2] >= p.depth ? 0 : 1 )
+			prev[0]+r( prev[0] <= 0 ? 0 : -1, prev[0] >= props.width ? 0 : 1 ),
+			prev[1]+r( prev[1] <= 0 ? 0 : -1, prev[1] >= props.height ? 0 : 1 ),
+			prev[2]+r( prev[2] <= 0 ? 0 : -1, prev[2] >= props.depth ? 0 : 1 )
 		];
 	}
 	
@@ -36,9 +35,8 @@
 	 * @param t: the time for it to continue.
 	 */
 	Generator.randomMolecules = function( x, t ) {
-		var pa = data.particles,
-			a = data.animation,
-			p = data.properties;
+		var pa = data.particles = [],
+			a = data.animation = [];
 		
 		// loop through all particles
 		while( x-- ) {
@@ -51,9 +49,9 @@
 				if( i == 0 ) {
 					// set start coords
 					a[i][x] = [
-						r( 0, p.width ),
-						r( 0, p.height ),
-						r( 0, p.depth )
+						r( 0, props.width ),
+						r( 0, props.height ),
+						r( 0, props.depth )
 					];
 				} else {
 					// use previous frame and add either -1, 0 or 1 to each coord.
@@ -71,8 +69,7 @@
 	 */
 	Generator.randomCollisions = function( collidingMolecules ) {
 		var pa = data.particles,
-			a = data.animation,
-			p = data.properties;
+			a = data.animation;
 		
 		var normalMolecules = pa.length;
 		for( var i = 0; i < collidingMolecules; i++ ) {
