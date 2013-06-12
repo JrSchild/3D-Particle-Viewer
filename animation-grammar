@@ -17,7 +17,7 @@ molecules: (object)
  |-	(id) molecule: (object)
 	 |	
 	 |	# The value of type has to be defined in the program itself. This happens in particle-viewer.molecules.js.
-	 |  # Current possible values: Protein, ProteinMerged.
+	 |	# Current possible values: Protein, ProteinMerged.
 	 |-	type: (string)
 		
 # Every item in the animation array represents one "frame" (step).
@@ -31,5 +31,5 @@ animation: (array)
  |-	animation[i]: (object)
 	 |	
 	 |	# Contains the new coordinates for molecule (id) at step i in the animation.
-	 |  # example: [10, 11, 6]
+	 |	# example: [10, 11, 6]
 	 |-	(id) animation: (array)
