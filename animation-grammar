@@ -14,7 +14,7 @@ properties: (object)
 molecules: (object)
  |	
  |	# It's ID is preferably a number starting from 0.
- |- (id) molecule: (object)
+ |-	(id) molecule: (object)
 	 |	
 	 |	# The value of type has to be defined in the program itself. This happens in particle-viewer.molecules.js.
 	 |  # Current possible values: Protein, ProteinMerged.
@@ -33,5 +33,3 @@ animation: (array)
 	 |	# Contains the new coordinates for molecule (id) at step i in the animation.
 	 |  # example: [10, 11, 6]
 	 |-	(id) animation: (array)
-
-
