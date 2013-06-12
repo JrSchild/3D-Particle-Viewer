@@ -1,42 +1,37 @@
 # This file represents the grammar used by the 3D Particle Viewer.
-# It is a work in progress and thus just a draft
+# It is a work in progress and likely to change in the future.
+# For now this is in line with the existing generated json files.
 
-# define all (environment) variables and properties used by the field.
+# Define all (environment) variables and properties used by the field.
 properties: (object)
  |
- |	# representing the dimensions of the field, in coordinates
+ |	# Representing the dimensions of the field, in coordinates.
  |-	width: (int)
  |-	height: (int)
  |-	depth: (int)
- |	
- |	# defining the different type of molecules used in the animation. Add property information like color, size?
- |-	types: (object)
-	 |
-	 |	# add new types as follow
-	 |-	typeName: (object)
-		 |
-		 |	# color code of molecule
-		 |-	color: (string)
-		 |	# define the size of the molecule in the range of 1 - 10
-		 |-	size: (int)
 
-# an array of all molecules, the molecules[i] is also the unique ID.
-molecules: (array)
+# An object of all molecules and which type the molecule is.
+molecules: (object)
  |	
- |	# each item in the molecules array represents one molecule.
- |-	molecules[i]: (object)
+ |	# It's ID is preferably a number starting from 0.
+ |- (id) molecule: (object)
 	 |	
-	 |	# the value of type has to be one of the defined types in the properties object earlier
+	 |	# The value of type has to be defined in the program itself. This happens in particle-viewer.molecules.js.
+	 |  # Current possible values: Protein, ProteinMerged.
 	 |-	type: (string)
 		
-# every item in the animation array represents one "frame" (step)
-# the engine will take care of the animations between them
+# Every item in the animation array represents one "frame" (step).
+# The engine will take care of the animations between them.
+# Molecules not present in the animation will not be displayed on the screen until present again.
+# This way you can "merge" two molecules together by hiding them both and showing a new, different molecule on the screen.
+# A simple example of this is in short_collision.json.
 animation: (array)
  |	
- |	# one step in the animation, this item contains a list of ALL particles (same number of itmes in arr molecules)
- |-	animation[i]: (array)
+ |	# one step in the animation
+ |-	animation[i]: (object)
 	 |	
-	 |	# contains the new coordinates voor i at step y. Example: [20, 30, 50]
-	 |-	animation[i][y]: (array)
+	 |	# Contains the new coordinates for molecule (id) at step i in the animation.
+	 |  # example: [10, 11, 6]
+	 |-	(id) animation: (array)
 
 
